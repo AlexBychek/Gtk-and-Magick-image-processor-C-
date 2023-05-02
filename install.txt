@@ -1,0 +1,18 @@
+Install GTK and libs
+sudo apt install -y build-essential libjpeg62-dev libtiff-dev libpng-dev libgtk-3-0 libgtk-3-dev libxml2-dev zlib1g
+
+Install Magick++
+
+git clone https://github.com/ImageMagick/ImageMagick
+
+cd ImageMagick
+
+./configure
+
+make -j4
+
+sudo make install
+
+if you have problem with undefined magick++ libs
+LD_LIBRARY_PATH=/usr/local/lib
+export LD_LIBRARY_PATH
