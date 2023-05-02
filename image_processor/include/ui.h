@@ -117,6 +117,8 @@ private:
     GtkWidget* pathLabel_;
     GtkWidget* scaleLabel_;
     GtkWidget* scaleSlider_;
+    GtkWidget* opacityLabel_;
+    GtkWidget* opacitySlider_;
     GtkWidget* xOffsetLabel_;
     GtkWidget* xOffsetInput_;
     GtkWidget* yOffsetLabel_;

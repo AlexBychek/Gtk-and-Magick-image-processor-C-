@@ -11,6 +11,7 @@ class Watermark : public Image
 {
 private:
     uint32_t scale_;
+    uint32_t opacity_;
     uint32_t xOffset_;
     uint32_t yOffset_;
 
@@ -20,7 +21,7 @@ public:
 
     Watermark( std::string path );
 
-    void setParams( uint32_t scale, uint32_t xOffset, uint32_t yOffset );
+    void setParams( uint32_t scale, uint32_t opacity, uint32_t xOffset, uint32_t yOffset );
     void addWatermark( Image& to_image );
 };
 

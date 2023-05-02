@@ -442,7 +442,10 @@ void UserInterface::createWaterMarkWindow()
 
     scaleLabel_ = gtk_label_new("scale");
     scaleSlider_ = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 1, 100, 1);
+    opacityLabel_ = gtk_label_new("opacity");
+    opacitySlider_ = gtk_scale_new_with_range(GTK_ORIENTATION_HORIZONTAL, 1, 100, 1);
     gtk_range_set_value(GTK_RANGE(scaleSlider_), 100);
+    gtk_range_set_value(GTK_RANGE(opacitySlider_), 100);
 
     xOffsetLabel_ = gtk_label_new("xOffset");
     xOffsetInput_ = gtk_spin_button_new_with_range(0, 10000, 1);
@@ -453,11 +456,13 @@ void UserInterface::createWaterMarkWindow()
     gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), pathLabel_, 1, 0, 5, 1);
     gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), scaleLabel_, 1, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), scaleSlider_, 2, 1, 1, 1);
-    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), xOffsetLabel_, 1, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), xOffsetInput_, 2, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), yOffsetLabel_, 1, 3, 1, 1);
-    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), yOffsetInput_, 2, 3, 1, 1);
-    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), watermarkButton_, 1, 4, 5, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), opacityLabel_, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), opacitySlider_, 2, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), xOffsetLabel_, 1, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), xOffsetInput_, 2, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), yOffsetLabel_, 1, 4, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), yOffsetInput_, 2, 4, 1, 1);
+    gtk_grid_attach(GTK_GRID(watermarkWindowGrid_), watermarkButton_, 1, 5, 5, 1);
 
     gtk_grid_set_column_spacing(GTK_GRID(watermarkWindowGrid_), 10);
     gtk_grid_set_row_spacing(GTK_GRID(watermarkWindowGrid_), 10);
@@ -503,10 +508,11 @@ void UserInterface::addWatermarkImage(GtkWidget* menu_item, gpointer user_data)
     UserInterface* interface = static_cast<UserInterface*>(user_data);
 
     uint32_t scale   = gtk_range_get_value(GTK_RANGE(interface->scaleSlider_));
+    uint32_t opacity = gtk_range_get_value(GTK_RANGE(interface->opacitySlider_));
     uint32_t xOffset = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(interface->xOffsetInput_));
     uint32_t yOffset = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(interface->yOffsetInput_));
 
-    interface->watermark_.setParams( scale, xOffset, yOffset );
+    interface->watermark_.setParams( scale, opacity, xOffset, yOffset );
     interface->watermark_.addWatermark(interface->workImage_);
     
     interface->updateImage();

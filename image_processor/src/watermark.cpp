@@ -3,10 +3,12 @@
 //
 
 #include <watermark.h>
+#include <MagickCore/MagickCore.h>
 
 Watermark::Watermark()
     : Image()
     , scale_(100)
+    , opacity_(100)
     , xOffset_(0)
     , yOffset_(0)
 {
@@ -15,14 +17,16 @@ Watermark::Watermark()
 Watermark::Watermark( std::string path )
     : Image(path)
     , scale_(100)
+    , opacity_(100)
     , xOffset_(0)
     , yOffset_(0)
 {
 }
 
-void Watermark::setParams( uint32_t scale, uint32_t xOffset, uint32_t yOffset )
+void Watermark::setParams( uint32_t scale, uint32_t opacity, uint32_t xOffset, uint32_t yOffset )
 {
     scale_ = scale;
+    opacity_ = opacity;
     xOffset_ = xOffset;
     yOffset_ = yOffset;
 }
@@ -38,5 +42,6 @@ void Watermark::addWatermark( Image& to_image )
 
     this->resize(newWidth, newHeight, true);
 
-    to_image.getRef().composite(image_, xOffset_, yOffset_, Magick::OverCompositeOp);
+    to_image.getRef().artifact("compose:args", std::string (std::to_string(opacity_) + "%").c_str());
+    to_image.getRef().composite(image_, xOffset_, yOffset_, Magick::CompositeOperator::DissolveCompositeOp);
 }
